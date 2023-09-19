@@ -4,6 +4,9 @@ import styled, { ThemeProvider } from 'styled-components/native';
 import { theme } from './theme';
 import Input from './components/Input';
 
+import { images } from './Images';
+import IconButton from './components/IconButton';
+
 const Container = styled.SafeAreaView.attrs(null)`
   flex: 1;
   background-color: ${({ theme }) => theme.background};
@@ -21,10 +24,12 @@ const Title = styled.Text`
 
 const App = () => {
   const [newTask, setNewTask] = useState('');
+
+  // 입력 항목이 수정될때마다 newTask변수에 수정된 내용을 저장
   const h_onChangeText = text => setNewTask(text);
   const h_onSubmitEditing = () => {
     alert(newTask);
-    setNewTask('');
+    setNewTask(''); //입력항목 클리어
   };
   return (
     <ThemeProvider theme={theme}>
@@ -40,6 +45,10 @@ const App = () => {
           onChangeText={h_onChangeText}
           onSubmitEditing={h_onSubmitEditing}
         />
+        <IconButton type={images.uncompleted} />
+        <IconButton type={images.completed} />
+        <IconButton type={images.delete} />
+        <IconButton type={images.update} />
       </Container>
     </ThemeProvider>
   );
