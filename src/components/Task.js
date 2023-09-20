@@ -19,19 +19,20 @@ const Contents = styled.Text`
   color: ${({ theme }) => theme.text};
 `;
 
-const Task = ({ text }) => {
+const Task = ({ text, id, deleteTask }) => {
   return (
     <Container>
       <IconButton type={images.uncompleted} />
       <Contents>{text}</Contents>
       <IconButton type={images.update} />
-      <IconButton type={images.delete} />
+      <IconButton type={images.delete} id={id} onPressOut={deleteTask} />
     </Container>
   );
 };
 
 Task.proptypes = {
   text: PropTypes.string.isRequired,
+  deleteTask: PropTypes.func.isRequired,
 };
 
 export default Task;

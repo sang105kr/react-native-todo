@@ -45,11 +45,17 @@ const App = () => {
       [key]: { id: key, text: newTask, completed: false },
     };
     setNewTask(''); //입력항목 클리어
-    setTasks({ ...tasks, ...newTaskObject });
+    setTasks({ ...tasks, ...newTaskObject }); //기존 tasks에 새로 입력된 항목 추가
   };
 
   const { width } = Dimensions.get('window');
 
+  // 항목 삭제
+  const h_deleteTask = id => {
+    const currentTasks = { ...tasks };
+    delete currentTasks[id];
+    setTasks(currentTasks);
+  };
   return (
     <ThemeProvider theme={theme}>
       <Container>
@@ -68,7 +74,12 @@ const App = () => {
           {Object.values(tasks)
             .reverse()
             .map(task => (
-              <Task key={task.id} text={task.text} />
+              <Task
+                key={task.id}
+                text={task.text}
+                id={task.id}
+                deleteTask={h_deleteTask}
+              />
             ))}
         </List>
       </Container>

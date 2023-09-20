@@ -10,9 +10,13 @@ const Icon = styled.Image`
   height: 30px;
   margin: 10px;
 `;
-const IconButton = ({ type, onPressOut }) => {
+const IconButton = ({ type, id, onPressOut }) => {
+  const h_onPressOut = () => {
+    onPressOut(id);
+  };
+
   return (
-    <Pressable onPressOut={onPressOut}>
+    <Pressable onPressOut={h_onPressOut}>
       <Icon source={type} />
     </Pressable>
   );
