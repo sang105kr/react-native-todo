@@ -22,9 +22,14 @@ const IconButton = ({ type, id, onPressOut }) => {
   );
 };
 
+IconButton.defaultProps = {
+  onPressOut: () => {},
+};
+
 IconButton.propTypes = {
   type: PropTypes.oneOf(Object.values(images)).isRequired,
   onPressOut: PropTypes.func,
+  id: PropTypes.string,
 };
 
 export default IconButton;

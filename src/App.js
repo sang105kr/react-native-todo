@@ -56,6 +56,16 @@ const App = () => {
     delete currentTasks[id];
     setTasks(currentTasks);
   };
+
+  // 완료/미완료
+  const h_toggleTask = id => {
+    const currentTasks = { ...tasks };
+    currentTasks[id]['completed'] = !currentTasks[id]['completed'];
+    // currentTasks[id].completed = !currentTasks[id].completed;
+
+    setTasks(currentTasks);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Container>
@@ -76,9 +86,11 @@ const App = () => {
             .map(task => (
               <Task
                 key={task.id}
-                text={task.text}
-                id={task.id}
-                deleteTask={h_deleteTask}
+                // text={task.text}
+                // id={task.id}
+                task={task}
+                deleteTask={h_deleteTask} //삭제
+                toggleTask={h_toggleTask} //완료/미완료
               />
             ))}
         </List>
