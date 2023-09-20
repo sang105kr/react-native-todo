@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import PropTypes from 'prop-types';
 import IconButton from './IconButton';
 import { images } from '../Images';
+import Input from './Input';
 
 const Container = styled.View`
   flex-direction: row;
@@ -21,8 +22,32 @@ const Contents = styled.Text`
     completed ? 'line-through' : 'none'};
 `;
 
-const Task = ({ task, deleteTask, toggleTask }) => {
-  return (
+const Task = ({ task, deleteTask, toggleTask, updateTask }) => {
+  const [isEditing, setIsEditing] = useState(false); //수정상태 판단
+  const [text, setText] = useState(task.text);
+
+  // 수정버튼 클릭시 isEditing 상태변수를 true로 변환
+  const h_update = () => setIsEditing(true);
+
+  const h_onSubmitEditing = () => {
+    if (!isEditing) return;
+    const editedTask = { ...task, text };
+
+    // 수정완료시 isEditing 상태변수를 false로 변환
+    setIsEditing(false);
+    updateTask(editedTask);
+  };
+
+  return isEditing ? (
+    <Input
+      value={text}
+      // onChangeText={updatedText => {
+      //   setText(updatedText);
+      // }}
+      onChangeText={setText}
+      onSubmitEditing={h_onSubmitEditing}
+    />
+  ) : (
     <Container>
       <IconButton
         type={task.completed ? images.completed : images.uncompleted}
@@ -30,7 +55,9 @@ const Task = ({ task, deleteTask, toggleTask }) => {
         onPressOut={toggleTask}
       />
       <Contents completed={task.completed}>{task.text}</Contents>
-      {task.completed || <IconButton type={images.update} />}
+      {task.completed || (
+        <IconButton type={images.update} onPressOut={h_update} />
+      )}
       <IconButton type={images.delete} id={task.id} onPressOut={deleteTask} />
     </Container>
   );
@@ -40,6 +67,7 @@ Task.proptypes = {
   task: PropTypes.object.isRequired,
   deleteTask: PropTypes.func.isRequired,
   toggleTask: PropTypes.func.isRequired,
+  updateTask: PropTypes.func.isRequired,
 };
 
 export default Task;

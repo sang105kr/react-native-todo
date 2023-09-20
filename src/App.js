@@ -66,6 +66,13 @@ const App = () => {
     setTasks(currentTasks);
   };
 
+  // 수정
+  const h_updateTask = task => {
+    const currentTasks = { ...tasks };
+    currentTasks[task.id] = task;
+    setTasks(currentTasks);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Container>
@@ -91,6 +98,7 @@ const App = () => {
                 task={task}
                 deleteTask={h_deleteTask} //삭제
                 toggleTask={h_toggleTask} //완료/미완료
+                updateTask={h_updateTask} //수정
               />
             ))}
         </List>
