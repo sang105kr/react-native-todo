@@ -16,7 +16,7 @@ const Container = styled.View`
 
 const Contents = styled.Text`
   flex: 1;
-  font-size: 24px;
+  font-size: 18px;
   color: ${({ theme, completed }) => (completed ? theme.done : theme.text)};
   text-decoration-line: ${({ completed }) =>
     completed ? 'line-through' : 'none'};
@@ -38,6 +38,14 @@ const Task = ({ task, deleteTask, toggleTask, updateTask }) => {
     updateTask(editedTask);
   };
 
+  // 할일 수정항목 벗어났을때
+  const h_onBlur = () => {
+    if (isEditing) {
+      setIsEditing(false); //조회모드
+      setText(task.text); //수정내용 처음상태로 초기화
+    }
+  };
+
   return isEditing ? (
     <Input
       value={text}
@@ -46,6 +54,7 @@ const Task = ({ task, deleteTask, toggleTask, updateTask }) => {
       // }}
       onChangeText={setText}
       onSubmitEditing={h_onSubmitEditing}
+      onBlur={h_onBlur}
     />
   ) : (
     <Container>

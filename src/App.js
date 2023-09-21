@@ -38,6 +38,8 @@ const App = () => {
 
   // 입력 항목이 수정될때마다 newTask변수에 수정된 내용을 저장
   const h_onChangeText = text => setNewTask(text);
+
+  // 할일 항목 추가
   const h_onSubmitEditing = () => {
     // alert(newTask);
     const key = Date.now().toString(); //중복되지 않는 유일한 임의값
@@ -50,14 +52,14 @@ const App = () => {
 
   const { width } = Dimensions.get('window');
 
-  // 항목 삭제
+  // 할일 항목 삭제
   const h_deleteTask = id => {
     const currentTasks = { ...tasks };
     delete currentTasks[id];
     setTasks(currentTasks);
   };
 
-  // 완료/미완료
+  // 할일 항목 완료/미완료
   const h_toggleTask = id => {
     const currentTasks = { ...tasks };
     currentTasks[id]['completed'] = !currentTasks[id]['completed'];
@@ -66,11 +68,16 @@ const App = () => {
     setTasks(currentTasks);
   };
 
-  // 수정
+  // 할일 항목 수정
   const h_updateTask = task => {
     const currentTasks = { ...tasks };
     currentTasks[task.id] = task;
     setTasks(currentTasks);
+  };
+
+  // 할일 항목 등록취소
+  const h_onBlur = () => {
+    setNewTask('');
   };
 
   return (
@@ -86,6 +93,7 @@ const App = () => {
           value={newTask}
           onChangeText={h_onChangeText}
           onSubmitEditing={h_onSubmitEditing} //추가
+          onBlur={h_onBlur} // 항목추가 입력필드가 포커스 벗어나면 호출
         />
         <List width={width}>
           {Object.values(tasks)

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>이미지 업로드 및 표시</title>
+  </head>
+  <body>
+    <h1>이미지 업로드 및 표시</h1>
+
+    <!-- 이미지 업로드 폼 -->
+    <form enctype="multipart/form-data">
+      <input type="file" id="imageInput" accept="image/*" />
+      <button type="button" onclick="displayImage()">이미지 표시</button>
+    </form>
+
+    <!-- 업로드한 이미지 표시 영역 -->
+    <div id="imageContainer"></div>
+
+    <script>
+      function displayImage() {
+        var imageInput = document.getElementById('imageInput');
+        var imageContainer = document.getElementById('imageContainer');
+
+        if (imageInput.files && imageInput.files[0]) {
+          var reader = new FileReader();
+
+          reader.onload = function (e) {
+            var img = new Image();
+            console.log(e);
+            img.src = e.target.result;
+            img.style.maxWidth = '100%'; // 이미지 크기 조정 (옵션)
+
+            // 이미지를 화면에 추가
+            imageContainer.innerHTML = '';
+            imageContainer.appendChild(img);
+          };
+
+          reader.readAsDataURL(imageInput.files[0]);
+        } else {
+          alert('이미지를 선택하세요.');
+        }
+      }
+
+      const canvas = document.createElement('canvas');
+      const height = 200;
+      const width = 200;
+
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext('2d');
+
+      ctx.strokeStyle = '#090';
+      ctx.beginPath();
+      ctx.arc(width / 2, height / 2, width / 2 - width / 10, 0, Math.PI * 2);
+      ctx.stroke();
+
+      canvas.toBlob(blob => {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          console.log(reader.result);
+        };
+
+        reader.readAsArrayBuffer(blob);
+      });
+      document.body.appendChild(canvas);
+    </script>
+  </body>
+</html>
