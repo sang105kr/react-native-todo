@@ -1,3 +1,4 @@
+// 메모리만 사용하여 crud
 import React, { useState } from 'react';
 import { StatusBar, Dimensions } from 'react-native';
 import styled, { ThemeProvider } from 'styled-components/native';

@@ -1,3 +1,4 @@
+// 로컬에 CRUD
 import React, { useState, useEffect, useCallback } from 'react';
 import { StatusBar, Dimensions } from 'react-native';
 import styled, { ThemeProvider } from 'styled-components/native';
