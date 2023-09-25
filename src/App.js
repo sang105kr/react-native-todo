@@ -128,7 +128,7 @@ const App = () => {
     Alert.alert('단건삭제', '삭제하시겠습니까?', [
       {
         text: '아니오',
-        // onPress: null,
+        onPress: () => {},
         style: 'cancel',
       },
       {
@@ -173,17 +173,30 @@ const App = () => {
       saveTasks(currentTasks);
     };
 
-    Alert.alert('완료항목삭제', '삭제하시겠습니까?', [
-      {
-        text: '아니오',
-        // onPress: null,
-        style: 'cancel',
-      },
-      {
-        text: '예',
-        onPress: deleteTasks,
-      },
-    ]);
+    const completedCnt = Object.values(tasks).filter(
+      task => task.completed,
+    ).length;
+
+    if (completedCnt) {
+      Alert.alert(`완료 : ${completedCnt} 건`, '삭제하시겠습니까?', [
+        {
+          text: '아니오',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        {
+          text: '예',
+          onPress: deleteTasks,
+        },
+      ]);
+    } else {
+      Alert.alert('완료건이 없습니다', '', [
+        {
+          text: '확인',
+          onPress: () => {},
+        },
+      ]);
+    }
   };
 
   return (
