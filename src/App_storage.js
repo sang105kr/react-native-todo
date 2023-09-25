@@ -1,11 +1,10 @@
 // 로컬에 CRUD
 import React, { useState, useEffect, useCallback } from 'react';
-import { StatusBar, Dimensions, Alert } from 'react-native';
+import { StatusBar, Dimensions } from 'react-native';
 import styled, { ThemeProvider } from 'styled-components/native';
 import { theme } from './theme';
 import Input from './components/Input';
 import Task from './components/Task';
-import TextButton from './components/TextButton';
 
 //로컬에 데이터 관리
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -119,23 +118,10 @@ const App = () => {
 
   // 할일 항목 삭제
   const h_deleteTask = id => {
-    const deleteTask = () => {
-      const currentTasks = { ...tasks };
-      delete currentTasks[id];
-      saveTasks(currentTasks);
-    };
-
-    Alert.alert('단건삭제', '삭제하시겠습니까?', [
-      {
-        text: '아니오',
-        // onPress: null,
-        style: 'cancel',
-      },
-      {
-        text: '예',
-        onPress: deleteTask,
-      },
-    ]);
+    const currentTasks = { ...tasks };
+    delete currentTasks[id];
+    // setTasks(currentTasks);
+    saveTasks(currentTasks);
   };
 
   // 할일 항목 완료/미완료
@@ -159,31 +145,6 @@ const App = () => {
   // 할일 항목 등록취소
   const h_onBlur = () => {
     setNewTask('');
-  };
-
-  // 완료된항목 전체 삭제
-  const h_delCompletedTasks = () => {
-    const deleteTasks = () => {
-      const currentTasks = { ...tasks };
-
-      Object.keys(currentTasks)
-        .filter(key => currentTasks[key].completed)
-        .forEach(key => delete currentTasks[key]);
-
-      saveTasks(currentTasks);
-    };
-
-    Alert.alert('완료항목삭제', '삭제하시겠습니까?', [
-      {
-        text: '아니오',
-        // onPress: null,
-        style: 'cancel',
-      },
-      {
-        text: '예',
-        onPress: deleteTasks,
-      },
-    ]);
   };
 
   return (
@@ -216,10 +177,6 @@ const App = () => {
               />
             ))}
         </List>
-        <TextButton
-          btnName="완료항목 전체삭제"
-          onPressOut={h_delCompletedTasks}
-        />
       </Container>
     </ThemeProvider>
   );
